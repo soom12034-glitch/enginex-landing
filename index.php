@@ -1,251 +1,172 @@
 <?php
 declare(strict_types=1);
+$lang = ($_GET['lang'] ?? 'ar') === 'en' ? 'en' : 'ar';
+$ar = $lang === 'ar';
 
-$language = isset($_GET['lang']) && $_GET['lang'] === 'en' ? 'en' : 'ar';
-$isArabic = $language === 'ar';
-
-$copy = [
-    'ar' => [
-        'title' => 'ENGINEX ERP | نظام متكامل لشركات المقاولات والاستشارات الهندسية',
-        'description' => 'منصة ERP سحابية ثنائية اللغة لشركات المقاولات والمكاتب الهندسية في جميع الدول العربية.',
-        'brand_sub' => 'منصة الأعمال الهندسية',
-        'nav_features' => 'المزايا', 'nav_workflow' => 'دورة العمل', 'nav_platform' => 'المنصة', 'nav_pricing' => 'الأسعار', 'nav_faq' => 'الأسئلة',
-        'start' => 'ابدأ تجربتك مجاناً', 'login' => 'تسجيل الدخول',
-        'eyebrow' => 'نظام ERP سحابي للمقاولات والاستشارات الهندسية',
-        'hero_title_1' => 'إدارة هندسية متكاملة.', 'hero_title_2' => 'وربحية واضحة لكل مشروع.',
-        'hero_text' => 'من المناقصة وحصر الكميات إلى التنفيذ والمستخلصات والمحاسبة—يجمع ENGINEX فرقك وبياناتك وقراراتك في نظام واحد يعمل في جميع الدول العربية.',
-        'watch' => 'اكتشف المنصة',
-        'no_card' => 'دون بطاقة دفع', 'trial' => 'تجربة كاملة 30 يوماً', 'bilingual' => 'عربي وإنجليزي',
-        'stat_modules' => 'وحدة مترابطة', 'stat_trial' => 'يوماً تجربة مجانية', 'stat_cloud' => 'وصول سحابي آمن', 'stat_region' => 'مصمم للمنطقة العربية',
-        'problem_kicker' => 'صورة واحدة للحقيقة', 'problem_title' => 'توقف عن إدارة المشروع بين ملفات ورسائل متفرقة.',
-        'problem_text' => 'كل عملية في ENGINEX تكمل العملية التالية، لتعرف التكلفة الفعلية والتقدم والمستحقات دون إعادة إدخال البيانات.',
-        'problems' => [
-            ['المشروعات والمناقصات', 'تسعير، حصر كميات، عقود ومراحل تنفيذ مترابطة.'],
-            ['المستخلصات والتكلفة', 'قارن المنفذ بالميزانية واكتشف الانحراف مبكراً.'],
-            ['المحاسبة والضرائب', 'قيود وفواتير وضرائب مرتبطة بمصدر العملية.'],
-            ['المعدات والصيانة', 'تابع الأصل والتشغيل والصيانة وتكلفتها.'],
-        ],
-        'flow_kicker' => 'دورة عمل قابلة للتتبع', 'flow_title' => 'من أول عرض سعر إلى آخر قيد محاسبي.',
-        'flow_text' => 'تنتقل البيانات تلقائياً بين المراحل، مع الحفاظ على المرجع والمسؤول والأثر المالي.',
-        'steps' => [
-            ['01', 'المناقصة', 'حصر البنود والكميات والتكلفة وسعر العرض.'],
-            ['02', 'العقد والميزانية', 'اعتماد القيمة وخطة المشروع ومراكز التكلفة.'],
-            ['03', 'التنفيذ والمستخلص', 'متابعة المواد والمعدات والتقدم والمستحقات.'],
-            ['04', 'المحاسبة والربحية', 'قيود قابلة للتتبع وهامش ربح واضح لكل مشروع.'],
-        ],
-        'platform_kicker' => 'صُمم لفريقك بالكامل', 'platform_title' => 'المكتب والموقع والإدارة المالية على نفس البيانات.',
-        'platform_text' => 'واجهة بسيطة لكل دور، وصلاحيات دقيقة لكل مستخدم، وتحديثات تصل للجميع فوراً.',
-        'points' => ['لوحات متابعة للمشروعات والربحية', 'إدارة المواد والمخزون والموردين', 'الموارد البشرية والرواتب', 'صلاحيات واعتمادات وسجل تدقيق', 'الوصول من الويب وويندوز والهاتف'],
-        'region_kicker' => 'منصة عربية بمرونة محلية', 'region_title' => 'يدعم أعمالك في جميع الدول العربية.',
-        'region_text' => 'واجهة عربية كاملة واتجاه RTL، مع الإنجليزية، والعملات والضرائب القابلة للتهيئة بما يناسب بلدك. وللمنشآت السعودية تتوفر متطلبات الفوترة والجاهزية لـZATCA.',
-        'region_items' => [['RTL', 'عربية كاملة', 'تجربة استخدام أصلية وليست ترجمة شكلية.'], ['FX', 'عملات متعددة', 'تهيئة العملة والتقارير حسب أعمال المنشأة.'], ['VAT', 'ضرائب مرنة', 'إعداد الضريبة والفواتير وفق السوق المحلي.'], ['ZATCA', 'جاهزية السعودية', 'دعم متطلبات الفوترة الإلكترونية للسوق السعودي.']],
-        'pricing_kicker' => 'عرض لفترة محدودة', 'pricing_title' => 'المنظومة الهندسية المتكاملة بسعر إطلاق خاص.',
-        'pricing_text' => 'وصول كامل إلى المنصة طوال مدة الاشتراك، مع تجربة مجانية لمدة 30 يوماً ودون بطاقة دفع.',
-        'annual' => 'اشتراك سنة واحدة', 'biennial' => 'اشتراك سنتين', 'sar' => 'ريال', 'save350' => 'وفر 350 ريال', 'save700' => 'وفر 700 ريال', 'best' => 'الأكثر طلباً', 'choose' => 'اختر هذا العرض',
-        'offer_alt' => 'عرض ENGINEX ERP للاشتراك السنوي واشتراك السنتين',
-        'faq_kicker' => 'قبل أن تبدأ', 'faq_title' => 'إجابات سريعة عن ENGINEX.',
-        'faqs' => [
-            ['هل تعمل المنصة في بلدي؟', 'نعم. صُممت ENGINEX لخدمة شركات المقاولات والاستشارات الهندسية في جميع الدول العربية، مع إعدادات مرنة للعملة والضرائب.'],
-            ['هل تدعم العربية والإنجليزية؟', 'نعم. تدعم الواجهة اللغتين مع اتجاه RTL كامل للعربية.'],
-            ['هل أحتاج بطاقة دفع للتجربة؟', 'لا. يمكنك بدء تجربة كاملة لمدة 30 يوماً دون بطاقة دفع.'],
-            ['هل تعمل على الهاتف؟', 'نعم. يمكنك الوصول من المتصفح وويندوز والهاتف وفق صلاحيات المستخدم.'],
-        ],
-        'cta_kicker' => 'ابدأ من مشروع واحد', 'cta_title' => 'حوّل المتابعة اليومية إلى قرار مالي يمكنك الوثوق به.',
-        'cta_text' => 'أنشئ مساحة عملك، ادع فريقك، وابدأ تجربة ENGINEX الكاملة لمدة 30 يوماً.',
-        'whatsapp' => 'تحدث معنا على واتساب', 'rights' => 'جميع الحقوق محفوظة.', 'made_for' => 'منصة سحابية لفرق المقاولات والهندسة في العالم العربي.',
-    ],
-    'en' => [
-        'title' => 'ENGINEX ERP | Integrated ERP for contractors and engineering firms',
-        'description' => 'A bilingual cloud ERP platform for contractors and engineering consultancies across the Arab world.',
-        'brand_sub' => 'Engineering business platform',
-        'nav_features' => 'Features', 'nav_workflow' => 'Workflow', 'nav_platform' => 'Platform', 'nav_pricing' => 'Pricing', 'nav_faq' => 'FAQ',
-        'start' => 'Start your free trial', 'login' => 'Sign in',
-        'eyebrow' => 'Cloud ERP for contractors and engineering consultants',
-        'hero_title_1' => 'Integrated engineering operations.', 'hero_title_2' => 'Clear margin on every project.',
-        'hero_text' => 'From tendering and quantity takeoff to execution, certificates, and accounting—ENGINEX brings your teams, data, and decisions into one system built for every Arab market.',
-        'watch' => 'Explore the platform',
-        'no_card' => 'No payment card', 'trial' => 'Full 30-day trial', 'bilingual' => 'Arabic and English',
-        'stat_modules' => 'connected modules', 'stat_trial' => 'days free trial', 'stat_cloud' => 'secure cloud access', 'stat_region' => 'built for Arab markets',
-        'problem_kicker' => 'One source of truth', 'problem_title' => 'Stop managing projects across scattered files and messages.',
-        'problem_text' => 'Every ENGINEX operation feeds the next, so actual cost, progress, and receivables stay visible without duplicate data entry.',
-        'problems' => [
-            ['Projects & tenders', 'Pricing, quantity takeoff, contracts, and delivery phases in one flow.'],
-            ['Certificates & cost', 'Compare actuals with budget and catch variance early.'],
-            ['Accounting & tax', 'Entries, invoices, and taxes linked to their operating source.'],
-            ['Equipment & maintenance', 'Track assets, utilization, service, and cost.'],
-        ],
-        'flow_kicker' => 'A traceable workflow', 'flow_title' => 'From the first proposal to the final journal entry.',
-        'flow_text' => 'Data moves between stages while preserving its reference, owner, status, and financial impact.',
-        'steps' => [
-            ['01', 'Tender', 'Build items, quantities, cost, and proposal price.'],
-            ['02', 'Contract & budget', 'Approve value, project plan, and cost centers.'],
-            ['03', 'Delivery & certificates', 'Track materials, equipment, progress, and receivables.'],
-            ['04', 'Accounting & margin', 'Traceable entries and a clear margin for every project.'],
-        ],
-        'platform_kicker' => 'Designed for the whole team', 'platform_title' => 'Office, site, and finance working from the same data.',
-        'platform_text' => 'A focused experience for every role, precise access control, and updates shared with everyone immediately.',
-        'points' => ['Project and margin dashboards', 'Materials, inventory, and suppliers', 'HR and payroll', 'Roles, approvals, and audit trail', 'Access from web, Windows, and mobile'],
-        'region_kicker' => 'Arabic-first, locally flexible', 'region_title' => 'Built to support every Arab market.',
-        'region_text' => 'Native Arabic RTL plus English, with configurable currencies and taxes for your country. Saudi businesses also get electronic invoicing and ZATCA readiness.',
-        'region_items' => [['RTL', 'Native Arabic', 'A genuine Arabic experience—not a cosmetic translation.'], ['FX', 'Multiple currencies', 'Configure currency and reporting around your business.'], ['VAT', 'Flexible tax', 'Set tax and invoice rules for your local market.'], ['ZATCA', 'Saudi readiness', 'Electronic invoicing support for the Saudi market.']],
-        'pricing_kicker' => 'Limited-time offer', 'pricing_title' => 'The complete engineering system at a special launch price.',
-        'pricing_text' => 'Full access for your selected subscription term, plus a complete 30-day trial with no payment card.',
-        'annual' => 'One-year subscription', 'biennial' => 'Two-year subscription', 'sar' => 'SAR', 'save350' => 'Save SAR 350', 'save700' => 'Save SAR 700', 'best' => 'Most popular', 'choose' => 'Choose this offer',
-        'offer_alt' => 'ENGINEX ERP annual and two-year subscription offer',
-        'faq_kicker' => 'Before you start', 'faq_title' => 'Quick answers about ENGINEX.',
-        'faqs' => [
-            ['Will the platform work in my country?', 'Yes. ENGINEX serves contractors and engineering consultancies across all Arab countries, with flexible currency and tax settings.'],
-            ['Does it support Arabic and English?', 'Yes. The interface supports both languages with full RTL for Arabic.'],
-            ['Do I need a payment card for the trial?', 'No. Start the complete 30-day trial without a payment card.'],
-            ['Does it work on mobile?', 'Yes. Access ENGINEX from the browser, Windows, and mobile based on user permissions.'],
-        ],
-        'cta_kicker' => 'Start with one project', 'cta_title' => 'Turn daily follow-up into financial decisions you can trust.',
-        'cta_text' => 'Create your workspace, invite your team, and start a complete 30-day ENGINEX trial.',
-        'whatsapp' => 'Talk to us on WhatsApp', 'rights' => 'All rights reserved.', 'made_for' => 'A cloud platform for contracting and engineering teams across the Arab world.',
-    ],
-];
-
-$t = $copy[$language];
-function esc(string $value): string { return htmlspecialchars($value, ENT_QUOTES, 'UTF-8'); }
-function langUrl(string $lang, string $anchor = ''): string { return '?lang=' . $lang . $anchor; }
+$c = [
+'ar' => [
+'title'=>'ENGINEX ERP | منصة تشغيل وربحية شركات المقاولات',
+'desc'=>'نظام ERP هندسي سحابي يربط المناقصات وحصر الكميات والمشروعات والمستخلصات والمحاسبة في منصة واحدة لجميع الدول العربية.',
+'nav'=>[['المنظومة','system'],['داخل النظام','product'],['الاشتراك والدفع','pricing'],['الأسئلة','faq']],
+'signin'=>'دخول المنصة','start'=>'ابدأ 30 يوماً مجاناً',
+'notice'=>'عرض الإطلاق متاح الآن — اشتراك سنوي يبدأ من 350 ريال',
+'eyebrow'=>'نظام تشغيل هندسي ومالي واحد','hero1'=>'اعرف ربحية مشروعك','hero2'=>'قبل أن يفوت وقت القرار.',
+'heroText'=>'من تسعير المناقصة وحصر الكميات، إلى العقد والتنفيذ والمستخلص والقيد المحاسبي. ENGINEX يحوّل دورة المشروع كاملة إلى بيانات مترابطة وقرار واضح.',
+'explore'=>'شاهد النظام من الداخل','nocard'=>'لا تتطلب التجربة بطاقة دفع','actual'=>'واجهة المشروعات الفعلية',
+'proof'=>[['01','المناقصة وحصر الكميات'],['02','العقد والميزانية'],['03','التنفيذ والمستخلصات'],['04','المحاسبة والربحية']],
+'sysK'=>'عمود فقري واحد للمشروع','sysT'=>'كل رقم يصل إلى مكانه. مرة واحدة.',
+'sysP'=>'لا تنسخ البيانات بين ملفات منفصلة. كل خطوة تحفظ مصدرها ومسؤولها وأثرها المالي، لتعرف أين يقف المشروع فعلاً.',
+'outcomes'=>[
+['المناقصة تصبح مشروعاً','حوّل بنود العرض والكميات إلى عقد وميزانية دون إعادة إدخال.'],
+['التنفيذ يظهر فوراً','اربط المواد والمعدات والمشتريات ونسب الإنجاز بمركز التكلفة الصحيح.'],
+['المستخلص يصنع أثراً مالياً','المراجعة والاعتماد يحافظان على المسار حتى الأثر المحاسبي.'],
+['الربحية ليست تخميناً','قارن BOQ والميزانية والتكلفة الفعلية من شاشة قرار واحدة.']],
+'prodK'=>'منتج حقيقي، لا صور دعائية','prodT'=>'شاهد كيف يعمل فريقك داخل ENGINEX.','prodP'=>'لقطات مباشرة من النظام. اختر وحدة لتشاهد واجهة العمل ومسارها.',
+'tabs'=>[
+['projects','المشروعات','مركز التجميع الذي يربط العقد والميزانية والكميات واليوميات.'],
+['qto','حصر الكميات','توثيق القياسات والأبعاد وتحويلها إلى جداول كميات قابلة للمراجعة.'],
+['claims','المستخلصات','مراجعة واعتماد المستحقات قبل إنشاء الأثر المحاسبي.'],
+['reports','التقارير','تحليل موحّد للمشروعات والميزانيات والمشتريات والقيمة المكتسبة.'],
+['zatca','الفوترة والضريبة','إدارة الفواتير الضريبية ومتطلبات السوق السعودي.']],
+'archK'=>'منظومة تغطي التشغيل بالكامل','archT'=>'ما يحتاجه المقاول. وما تحتاجه الإدارة.',
+'groups'=>[
+['المشروعات والتسليم',['المناقصات والتسعير','حصر الكميات وBOQ','العقود والمستخلصات','اليوميات ونسب الإنجاز']],
+['المال والقرار',['الميزانيات ومراكز التكلفة','المحاسبة والقيود','الرواتب','التقارير ولوحات القيادة']],
+['الموارد والتوريد',['المواد والمخزون','المشتريات والموردون','المعدات والتشغيل','الصيانة والخدمات']],
+['الحوكمة والامتثال',['الفواتير والضرائب','الصلاحيات والاعتمادات','سجل تدقيق كامل','الفروع والإدارة المركزية']]],
+'regK'=>'بُني للعالم العربي','regT'=>'لغة السوق ومرونة كل بلد.',
+'regP'=>'واجهة عربية أصلية مع الإنجليزية، وإعدادات مرنة للعملات والضرائب والفروع. وللسوق السعودي، يدعم النظام مسار الفوترة الإلكترونية ومتطلبات ZATCA.',
+'regPoints'=>['واجهة RTL عربية كاملة','عملات وضرائب قابلة للتهيئة','فروع وإدارة مركزية','صلاحيات وعزل بيانات وسجل تدقيق'],
+'priceK'=>'اشتراك واضح، بلا مفاجآت','priceT'=>'ابدأ بكامل المنظومة لمدة 30 يوماً.','priceP'=>'جرّب أولاً دون بطاقة. بعد ذلك اختر مدة الاشتراك والطريقة الأنسب للدفع.',
+'annual'=>'سنة واحدة','biennial'=>'سنتان','currency'=>'ريال','term'=>'لكامل المدة','choice'=>'اختيار مرن',
+'features'=>['حتى 8 مستخدمين','الفروع والإدارة المركزية','قاعدة بيانات هجينة','الإدارة المالية مشمولة','إمكانية إضافة فروع'],
+'subscribe'=>'أنشئ حسابك واختر الخطة','trial'=>'التجربة الكاملة 30 يوماً · دون بطاقة دفع',
+'how'=>'كيف يتم الاشتراك؟','steps'=>[
+['1','أنشئ مساحة العمل','سجّل بيانات المنشأة وابدأ التجربة مباشرة.'],
+['2','اختر المدة','سنة بـ350 ريال أو سنتان بـ700 ريال.'],
+['3','اختر الدفع','دفع إلكتروني آمن، InstaPay أو تحويل بنكي دولي.'],
+['4','تفعيل الاشتراك','بعد التحقق من الدفع يُفعّل الاشتراك على حساب المنشأة.']],
+'payT'=>'طرق الدفع المتاحة','payP'=>'اختر الطريقة الأنسب لك. تبدأ خطوات الاشتراك من إنشاء الحساب لضمان ربط الدفع بمنشأتك.',
+'online'=>'الدفع الإلكتروني','onlineP'=>'انتقل من حسابك إلى صفحة دفع آمنة لإتمام العملية وتتبع حالة الاشتراك.',
+'insta'=>'InstaPay — مصر','instaP'=>'رابط دفع مباشر للمستخدمين في مصر.','openInsta'=>'فتح InstaPay',
+'bank'=>'تحويل بنكي دولي','bankP'=>'متاح للعملاء من مختلف الدول. استخدم بيانات الحساب أدناه ثم أرسل إثبات التحويل.',
+'details'=>'عرض بيانات التحويل','holder'=>'اسم المستفيد','bankName'=>'البنك','account'=>'رقم الحساب','send'=>'إرسال إثبات الدفع عبر واتساب',
+'tax'=>'رقم التسجيل الضريبي المصري: 630-910-491',
+'faqK'=>'قبل أن تبدأ','faqT'=>'إجابات مباشرة على أسئلة الشراء.',
+'faqs'=>[
+['هل يعمل ENGINEX خارج السعودية؟','نعم. المنصة موجهة لشركات المقاولات والاستشارات في جميع الدول العربية، مع إعدادات مرنة للعملة والضرائب والفروع.'],
+['هل السعر يشمل الوحدات المالية؟','نعم. الخطة الحالية تشمل الإدارة المالية والفروع والإدارة المركزية وحتى 8 مستخدمين، مع إمكانية إضافة فروع حسب الحاجة.'],
+['هل أستطيع التجربة قبل الدفع؟','نعم. تحصل على تجربة كاملة لمدة 30 يوماً ولا تحتاج إلى بطاقة دفع لبدئها.'],
+['كيف يتم تفعيل الاشتراك؟','أنشئ حساب المنشأة، ثم اختر الخطة وطريقة الدفع. يُربط الدفع بحسابك ويُفعّل الاشتراك بعد التحقق.'],
+['هل البيانات والصلاحيات منفصلة بين المنشآت؟','يدعم النظام عزل بيانات المنشآت، وصلاحيات حسب الدور، واعتمادات وسجل تدقيق للعمليات.']],
+'ctaT'=>'مشروعك التالي يستحق نظاماً يرى الصورة كاملة.','ctaP'=>'ابدأ التجربة، أدخل مشروعاً واحداً، وشاهد الفرق في وضوح التكلفة والقرار.',
+'contact'=>'تحدث مع فريق ENGINEX','footer'=>'منصة تشغيل هندسية ومالية لشركات المقاولات والاستشارات في العالم العربي.','rights'=>'جميع الحقوق محفوظة.'
+],
+'en' => [
+'title'=>'ENGINEX ERP | Operating system for profitable construction',
+'desc'=>'A cloud engineering ERP connecting tenders, quantity takeoff, projects, claims and accounting for contractors across Arab markets.',
+'nav'=>[['The system','system'],['Inside ENGINEX','product'],['Plans & payment','pricing'],['FAQ','faq']],
+'signin'=>'Sign in','start'=>'Start 30 days free',
+'notice'=>'Launch offer available now — annual access from SAR 350',
+'eyebrow'=>'One engineering and financial operating system','hero1'=>'Know project margin','hero2'=>'while there is still time to act.',
+'heroText'=>'From tender pricing and quantity takeoff to contracts, delivery, claims, and the final journal entry. ENGINEX turns the full project cycle into connected data and clear decisions.',
+'explore'=>'See the product inside','nocard'=>'No payment card required for the trial','actual'=>'Actual projects workspace',
+'proof'=>[['01','Tender & quantity takeoff'],['02','Contract & budget'],['03','Delivery & claims'],['04','Accounting & margin']],
+'sysK'=>'One project backbone','sysT'=>'Every number arrives where it belongs. Once.',
+'sysP'=>'Stop copying information between disconnected files. Every step retains its source, owner, and financial impact, so you always know where the project stands.',
+'outcomes'=>[
+['A tender becomes a project','Move bid items and quantities into the contract and budget without re-entry.'],
+['Delivery becomes visible','Connect materials, equipment, procurement, and progress to the right cost center.'],
+['A claim creates financial impact','Review and approval preserve the trail through to accounting.'],
+['Margin is no longer a guess','Compare BOQ, budget, and actual cost from one decision screen.']],
+'prodK'=>'A real product, not stock mockups','prodT'=>'See how your team works inside ENGINEX.','prodP'=>'Direct captures from the system. Choose a module to inspect its workspace and flow.',
+'tabs'=>[
+['projects','Projects','The hub connecting contracts, budgets, quantities, and site diaries.'],
+['qto','Quantity takeoff','Document measurements, then turn them into reviewable quantity tables.'],
+['claims','Claims','Review and approve entitlements before creating accounting impact.'],
+['reports','Analytics','Unified insight across projects, budgets, procurement, and earned value.'],
+['zatca','Tax & invoicing','Manage tax invoices and Saudi electronic invoicing requirements.']],
+'archK'=>'Full operating coverage','archT'=>'What contractors run. What management needs.',
+'groups'=>[
+['Projects & delivery',['Tenders and pricing','Quantity takeoff & BOQ','Contracts and claims','Diaries and progress']],
+['Finance & decisions',['Budgets and cost centers','Accounting and journals','Payroll','Reports and dashboards']],
+['Resources & procurement',['Materials and inventory','Purchasing and suppliers','Equipment and utilization','Maintenance and service']],
+['Governance & compliance',['Invoices and tax','Roles and approvals','Complete audit trail','Branches and head office']]],
+'regK'=>'Built for Arab markets','regT'=>'Native language. Local flexibility.',
+'regP'=>'Native Arabic RTL plus English, with configurable currencies, taxes, and branches. For Saudi Arabia, the platform supports electronic invoicing and ZATCA workflows.',
+'regPoints'=>['Complete native Arabic RTL','Configurable currency and tax','Branches and head office','Roles, tenant isolation, and audit trail'],
+'priceK'=>'Clear plans, no surprises','priceT'=>'Start with the complete system for 30 days.','priceP'=>'Try it first without a payment card. Then choose your term and preferred payment method.',
+'annual'=>'One year','biennial'=>'Two years','currency'=>'SAR','term'=>'for the full term','choice'=>'Flexible choice',
+'features'=>['Up to 8 users','Branches and head office','Hybrid database','Finance included','Add branches as needed'],
+'subscribe'=>'Create your account & choose','trial'=>'Full 30-day trial · no payment card',
+'how'=>'How subscription works','steps'=>[
+['1','Create your workspace','Register the company and begin the trial immediately.'],
+['2','Choose a term','One year for SAR 350 or two years for SAR 700.'],
+['3','Choose payment','Secure online payment, InstaPay, or international bank transfer.'],
+['4','Activate','Your company subscription is activated after payment verification.']],
+'payT'=>'Available payment methods','payP'=>'Choose what works for you. Subscription starts by creating an account so payment is linked to your company.',
+'online'=>'Online payment','onlineP'=>'Continue from your account to a secure checkout and track subscription status.',
+'insta'=>'InstaPay — Egypt','instaP'=>'A direct payment link for customers in Egypt.','openInsta'=>'Open InstaPay',
+'bank'=>'International bank transfer','bankP'=>'Available across markets. Use the details below, then send your transfer receipt.',
+'details'=>'View transfer details','holder'=>'Account holder','bankName'=>'Bank','account'=>'Account number','send'=>'Send payment proof on WhatsApp',
+'tax'=>'Egyptian tax registration: 630-910-491',
+'faqK'=>'Before you start','faqT'=>'Straight answers to buying questions.',
+'faqs'=>[
+['Does ENGINEX work outside Saudi Arabia?','Yes. It is designed for contractors and engineering consultancies across Arab countries, with flexible currency, tax, and branch settings.'],
+['Does the plan include finance?','Yes. The current plan includes finance, branches and head-office management, and up to 8 users, with more branches available as needed.'],
+['Can I try it before paying?','Yes. You receive a complete 30-day trial and do not need a payment card to start.'],
+['How is the subscription activated?','Create the company account, select a plan and payment method, and the subscription is linked and activated after verification.'],
+['Are company data and permissions isolated?','The platform supports tenant data isolation, role-based permissions, approvals, and an operational audit trail.']],
+'ctaT'=>'Your next project deserves a system that sees the whole picture.','ctaP'=>'Start the trial, enter one project, and experience clearer cost and decision-making.',
+'contact'=>'Talk to the ENGINEX team','footer'=>'An engineering and financial operating platform for contractors and consultants across the Arab world.','rights'=>'All rights reserved.'
+]];
+$t = $c[$lang];
+function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
 ?>
 <!doctype html>
-<html lang="<?= esc($language) ?>" dir="<?= $isArabic ? 'rtl' : 'ltr' ?>" data-theme="dark">
+<html lang="<?= e($lang) ?>" dir="<?= $ar ? 'rtl' : 'ltr' ?>">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="<?= esc($t['description']) ?>">
-    <meta name="theme-color" content="#06162d">
-    <title><?= esc($t['title']) ?></title>
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    <link rel="preload" as="image" href="assets/hero-construction.png" fetchpriority="high">
-    <link rel="stylesheet" href="assets/style.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="<?= e($t['desc']) ?>"><meta name="theme-color" content="#071525">
+<meta property="og:title" content="<?= e($t['title']) ?>"><meta property="og:description" content="<?= e($t['desc']) ?>">
+<title><?= e($t['title']) ?></title><link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/screens/projects.webp" as="image" fetchpriority="high"><link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-<a class="skip" href="#main"><?= $isArabic ? 'انتقل إلى المحتوى' : 'Skip to content' ?></a>
-
-<header class="site-header" id="top">
-    <div class="container nav-wrap">
-        <a class="brand" href="<?= esc(langUrl($language)) ?>" aria-label="ENGINEX ERP">
-            <span class="brand-mark" aria-hidden="true"><i></i><b>X</b></span>
-            <span><strong>ENGINE<span>X</span></strong><small><?= esc($t['brand_sub']) ?></small></span>
-        </a>
-        <nav class="desktop-nav" aria-label="<?= $isArabic ? 'التنقل الرئيسي' : 'Main navigation' ?>">
-            <a href="#features"><?= esc($t['nav_features']) ?></a>
-            <a href="#workflow"><?= esc($t['nav_workflow']) ?></a>
-            <a href="#platform"><?= esc($t['nav_platform']) ?></a>
-            <a href="#pricing"><?= esc($t['nav_pricing']) ?></a>
-            <a href="#faq"><?= esc($t['nav_faq']) ?></a>
-        </nav>
-        <div class="nav-actions">
-            <button class="icon-btn" id="themeToggle" type="button" aria-label="<?= $isArabic ? 'تبديل المظهر' : 'Toggle theme' ?>">◐</button>
-            <a class="lang-btn" href="<?= esc(langUrl($isArabic ? 'en' : 'ar')) ?>" lang="<?= $isArabic ? 'en' : 'ar' ?>"><?= $isArabic ? 'EN' : 'عربي' ?></a>
-            <a class="button button-small" href="https://app.enginex2030.com/register"><?= esc($t['start']) ?></a>
-            <button class="icon-btn menu-btn" id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileMenu">☰</button>
-        </div>
-    </div>
-    <nav class="mobile-menu" id="mobileMenu">
-        <a href="#features"><?= esc($t['nav_features']) ?></a><a href="#workflow"><?= esc($t['nav_workflow']) ?></a><a href="#platform"><?= esc($t['nav_platform']) ?></a><a href="#pricing"><?= esc($t['nav_pricing']) ?></a><a href="#faq"><?= esc($t['nav_faq']) ?></a>
-    </nav>
-</header>
+<a class="skip" href="#main"><?= $ar ? 'انتقل للمحتوى' : 'Skip to content' ?></a>
+<div class="announcement"><a href="#pricing"><?= e($t['notice']) ?> <span>↗</span></a></div>
+<header class="site-header" id="top"><div class="container nav-shell">
+<a class="brand" href="?lang=<?= e($lang) ?>" aria-label="ENGINEX ERP"><img src="assets/brand.svg" alt=""><span>ENGINE<b>X</b><small>ERP</small></span></a>
+<nav class="desktop-nav"><?php foreach($t['nav'] as $n): ?><a href="#<?= e($n[1]) ?>"><?= e($n[0]) ?></a><?php endforeach; ?></nav>
+<div class="nav-actions"><a class="lang" href="?lang=<?= $ar?'en':'ar' ?>"><?= $ar?'EN':'عربي' ?></a><a class="signin" href="https://app.enginex2030.com/"><?= e($t['signin']) ?></a><a class="button compact" href="https://app.enginex2030.com/register"><?= e($t['start']) ?></a><button class="menu-toggle" aria-controls="mobileNav" aria-expanded="false"><span></span><span></span></button></div>
+</div><nav class="mobile-nav" id="mobileNav"><?php foreach($t['nav'] as $n): ?><a href="#<?= e($n[1]) ?>"><?= e($n[0]) ?></a><?php endforeach; ?><a href="https://app.enginex2030.com/register"><?= e($t['start']) ?></a></nav></header>
 
 <main id="main">
-    <section class="hero">
-        <img class="hero-image" src="assets/hero-construction.png" width="1792" height="1024" alt="<?= $isArabic ? 'مهندس يتابع مشروع إنشاءات باستخدام جهاز لوحي' : 'Engineer managing a construction project on a tablet' ?>">
-        <div class="hero-overlay"></div>
-        <div class="container hero-content">
-            <p class="kicker light"><span></span><?= esc($t['eyebrow']) ?></p>
-            <h1><?= esc($t['hero_title_1']) ?><br><em><?= esc($t['hero_title_2']) ?></em></h1>
-            <p class="hero-lead"><?= esc($t['hero_text']) ?></p>
-            <div class="hero-actions">
-                <a class="button" href="https://app.enginex2030.com/register"><?= esc($t['start']) ?></a>
-                <a class="button button-ghost" href="#platform"><?= esc($t['watch']) ?></a>
-            </div>
-            <div class="trust-row"><span>✓ <?= esc($t['no_card']) ?></span><span>✓ <?= esc($t['trial']) ?></span><span>✓ <?= esc($t['bilingual']) ?></span></div>
-        </div>
-    </section>
+<section class="hero"><div class="blueprint"></div><div class="container hero-grid">
+<div class="hero-copy reveal"><p class="eyebrow"><span></span><?= e($t['eyebrow']) ?></p><h1><?= e($t['hero1']) ?><br><em><?= e($t['hero2']) ?></em></h1><p class="hero-lead"><?= e($t['heroText']) ?></p><div class="hero-actions"><a class="button" href="https://app.enginex2030.com/register"><?= e($t['start']) ?></a><a class="text-action" href="#product"><?= e($t['explore']) ?> <b>↓</b></a></div><p class="trial-note"><span>✓</span><?= e($t['nocard']) ?></p></div>
+<div class="product-stage reveal"><div class="stage-orbit"></div><figure class="product-window"><div class="window-bar"><i></i><i></i><i></i><span>cloud.enginex2030.com</span></div><img src="assets/screens/projects.webp" width="1280" height="720" alt="<?= e($t['actual']) ?>"><figcaption><span class="pulse"></span><?= e($t['actual']) ?></figcaption></figure><div class="float-stat stat-a"><strong>15+</strong><span><?= $ar?'وحدة تشغيلية':'operating modules' ?></span></div><div class="float-stat stat-b"><strong>AR / EN</strong><span><?= $ar?'ثنائي اللغة':'bilingual' ?></span></div></div>
+</div><div class="container lifecycle"><?php foreach($t['proof'] as $i=>$p): ?><div><b><?= e($p[0]) ?></b><span><?= e($p[1]) ?></span></div><?php if($i<3): ?><i>→</i><?php endif; ?><?php endforeach; ?></div></section>
 
-    <section class="stats" aria-label="<?= $isArabic ? 'معلومات المنصة' : 'Platform facts' ?>">
-        <div class="container stats-grid">
-            <div><strong>15+</strong><span><?= esc($t['stat_modules']) ?></span></div>
-            <div><strong>30</strong><span><?= esc($t['stat_trial']) ?></span></div>
-            <div><strong>24/7</strong><span><?= esc($t['stat_cloud']) ?></span></div>
-            <div><strong>MENA</strong><span><?= esc($t['stat_region']) ?></span></div>
-        </div>
-    </section>
+<section class="section system" id="system"><div class="container"><header class="section-head reveal"><p class="eyebrow dark"><span></span><?= e($t['sysK']) ?></p><h2><?= e($t['sysT']) ?></h2><p><?= e($t['sysP']) ?></p></header><div class="outcome-grid"><?php foreach($t['outcomes'] as $i=>$o): ?><article class="outcome reveal"><div class="outcome-index">0<?= $i+1 ?></div><div><h3><?= e($o[0]) ?></h3><p><?= e($o[1]) ?></p></div></article><?php endforeach; ?></div></div></section>
 
-    <section class="section" id="features">
-        <div class="container">
-            <header class="section-head reveal"><p class="kicker"><span></span><?= esc($t['problem_kicker']) ?></p><h2><?= esc($t['problem_title']) ?></h2><p><?= esc($t['problem_text']) ?></p></header>
-            <div class="feature-grid">
-                <?php foreach ($t['problems'] as $index => $item): ?>
-                <article class="feature-card reveal"><span class="card-number">0<?= $index + 1 ?></span><h3><?= esc($item[0]) ?></h3><p><?= esc($item[1]) ?></p><i aria-hidden="true">↗</i></article>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
+<section class="section product" id="product"><div class="container"><header class="section-head light reveal"><p class="eyebrow"><span></span><?= e($t['prodK']) ?></p><h2><?= e($t['prodT']) ?></h2><p><?= e($t['prodP']) ?></p></header><div class="product-demo reveal"><div class="demo-tabs" role="tablist"><?php foreach($t['tabs'] as $i=>$tab): ?><button role="tab" aria-selected="<?= $i===0?'true':'false' ?>" data-screen="<?= e($tab[0]) ?>" data-copy="<?= e($tab[2]) ?>"><?= e($tab[1]) ?></button><?php endforeach; ?></div><div class="demo-frame"><img id="demoImage" src="assets/screens/projects.webp" width="1280" height="720" loading="lazy" alt="<?= e($t['tabs'][0][1]) ?>"><div class="demo-caption"><span>ENGINEX / <b id="demoTitle"><?= e($t['tabs'][0][1]) ?></b></span><p id="demoCopy"><?= e($t['tabs'][0][2]) ?></p></div></div></div></div></section>
 
-    <section class="section section-dark" id="workflow">
-        <div class="container">
-            <header class="section-head reveal"><p class="kicker light"><span></span><?= esc($t['flow_kicker']) ?></p><h2><?= esc($t['flow_title']) ?></h2><p><?= esc($t['flow_text']) ?></p></header>
-            <div class="workflow-grid">
-                <?php foreach ($t['steps'] as $step): ?>
-                <article class="workflow-card reveal"><strong><?= esc($step[0]) ?></strong><div><h3><?= esc($step[1]) ?></h3><p><?= esc($step[2]) ?></p></div></article>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
+<section class="section architecture"><div class="container"><header class="section-head reveal"><p class="eyebrow dark"><span></span><?= e($t['archK']) ?></p><h2><?= e($t['archT']) ?></h2></header><div class="module-matrix"><?php foreach($t['groups'] as $i=>$g): ?><article class="module-group reveal"><span>0<?= $i+1 ?></span><h3><?= e($g[0]) ?></h3><ul><?php foreach($g[1] as $m): ?><li><?= e($m) ?></li><?php endforeach; ?></ul></article><?php endforeach; ?></div></div></section>
 
-    <section class="section" id="platform">
-        <div class="container split">
-            <figure class="media-card reveal"><img src="assets/project-team.png" width="1792" height="1024" loading="lazy" alt="<?= $isArabic ? 'فريق هندسي يراجع الجدول الزمني وتكلفة المشروع' : 'Engineering team reviewing project schedule and cost' ?>"><figcaption><strong>15+</strong><span><?= esc($t['stat_modules']) ?></span></figcaption></figure>
-            <div class="split-copy reveal">
-                <p class="kicker"><span></span><?= esc($t['platform_kicker']) ?></p><h2><?= esc($t['platform_title']) ?></h2><p><?= esc($t['platform_text']) ?></p>
-                <ul class="check-list"><?php foreach ($t['points'] as $point): ?><li><span>✓</span><?= esc($point) ?></li><?php endforeach; ?></ul>
-                <a class="text-link" href="https://app.enginex2030.com/register"><?= esc($t['start']) ?> <b aria-hidden="true">↗</b></a>
-            </div>
-        </div>
-    </section>
+<section class="region-band"><div class="container region-grid"><div class="region-copy reveal"><p class="eyebrow"><span></span><?= e($t['regK']) ?></p><h2><?= e($t['regT']) ?></h2><p><?= e($t['regP']) ?></p><ul><?php foreach($t['regPoints'] as $p): ?><li><span>✓</span><?= e($p) ?></li><?php endforeach; ?></ul></div><figure class="region-screen reveal"><img src="assets/screens/zatca.webp" width="1280" height="720" loading="lazy" alt="ZATCA"><figcaption><strong>ZATCA</strong><span><?= $ar?'جاهزية الفوترة الإلكترونية للسوق السعودي':'Saudi electronic invoicing readiness' ?></span></figcaption></figure></div></section>
 
-    <section class="section region">
-        <div class="container">
-            <header class="section-head center reveal"><p class="kicker"><span></span><?= esc($t['region_kicker']) ?></p><h2><?= esc($t['region_title']) ?></h2><p><?= esc($t['region_text']) ?></p></header>
-            <div class="region-grid">
-                <?php foreach ($t['region_items'] as $item): ?><article class="region-card reveal"><strong><?= esc($item[0]) ?></strong><h3><?= esc($item[1]) ?></h3><p><?= esc($item[2]) ?></p></article><?php endforeach; ?>
-            </div>
-        </div>
-    </section>
+<section class="section pricing" id="pricing"><div class="container"><header class="section-head center reveal"><p class="eyebrow dark"><span></span><?= e($t['priceK']) ?></p><h2><?= e($t['priceT']) ?></h2><p><?= e($t['priceP']) ?></p></header>
+<div class="price-layout"><?php foreach([['annual','350',$t['annual'],false],['biennial','700',$t['biennial'],true]] as $plan): ?><article class="plan <?= $plan[3]?'plan-dark':'' ?> reveal"><div class="plan-top"><div><span class="plan-label">ENGINEX ERP</span><h3><?= e($plan[2]) ?></h3></div><?= $plan[3]?'<span class="two-years">02</span>':'<span class="plan-badge">'.e($t['choice']).'</span>' ?></div><div class="amount"><strong data-price="<?= $plan[0] ?>"><?= $plan[1] ?></strong><span><?= e($t['currency']) ?><small><?= e($t['term']) ?></small></span></div><ul><?php foreach($t['features'] as $f): ?><li><span>✓</span><?= e($f) ?></li><?php endforeach; ?></ul><a class="button full <?= $plan[3]?'orange':'' ?>" href="https://app.enginex2030.com/register"><?= e($t['subscribe']) ?></a><p class="microcopy"><?= e($t['trial']) ?></p></article><?php endforeach; ?></div>
+<div class="subscribe-flow reveal"><h3><?= e($t['how']) ?></h3><div class="flow-steps"><?php foreach($t['steps'] as $s): ?><article><b><?= e($s[0]) ?></b><h4><?= e($s[1]) ?></h4><p><?= e($s[2]) ?></p></article><?php endforeach; ?></div></div>
+<div class="payments reveal"><header><div><span>PAYMENT</span><h3><?= e($t['payT']) ?></h3></div><p><?= e($t['payP']) ?></p></header><div class="payment-grid">
+<article><div class="payment-icon">⌁</div><h4><?= e($t['online']) ?></h4><p><?= e($t['onlineP']) ?></p><a href="https://app.enginex2030.com/register"><?= e($t['subscribe']) ?> ↗</a></article>
+<article><div class="payment-icon">IP</div><h4><?= e($t['insta']) ?></h4><p><?= e($t['instaP']) ?></p><a href="https://ipn.eg/S/soom12002/instapay/3dl0ok" target="_blank" rel="noopener"><?= e($t['openInsta']) ?> ↗</a></article>
+<article class="bank-card"><div class="payment-icon">IBAN</div><h4><?= e($t['bank']) ?></h4><p><?= e($t['bankP']) ?></p><details><summary><?= e($t['details']) ?><span>+</span></summary><dl><div><dt><?= e($t['holder']) ?></dt><dd>Hesham Mamdouh Sadek Abd El Rahman</dd></div><div><dt><?= e($t['bankName']) ?></dt><dd>Mashreq Bank</dd></div><div><dt><?= e($t['account']) ?></dt><dd>059102587779</dd></div><div><dt>IBAN</dt><dd>EG760046010200000059102587779</dd></div></dl></details><a href="https://wa.me/201147372720" target="_blank" rel="noopener"><?= e($t['send']) ?> ↗</a></article>
+</div><p class="tax-number"><?= e($t['tax']) ?></p></div></div></section>
 
-    <section class="section pricing" id="pricing">
-        <div class="container">
-            <header class="section-head center reveal"><p class="kicker"><span></span><?= esc($t['pricing_kicker']) ?></p><h2><?= esc($t['pricing_title']) ?></h2><p><?= esc($t['pricing_text']) ?></p></header>
-            <div class="pricing-layout">
-                <figure class="offer-art reveal"><img src="assets/pricing-offer.png" width="945" height="1679" loading="lazy" alt="<?= esc($t['offer_alt']) ?>"></figure>
-                <div class="price-cards">
-                    <article class="price-card featured reveal"><span class="badge"><?= esc($t['best']) ?></span><p><?= esc($t['annual']) ?></p><div class="old-price"><del>700</del> <?= esc($t['sar']) ?></div><div class="price"><strong>350</strong><span><?= esc($t['sar']) ?></span></div><small><?= esc($t['save350']) ?></small><a class="button" href="https://app.enginex2030.com/register"><?= esc($t['choose']) ?></a></article>
-                    <article class="price-card reveal"><p><?= esc($t['biennial']) ?></p><div class="old-price"><del>1400</del> <?= esc($t['sar']) ?></div><div class="price"><strong>700</strong><span><?= esc($t['sar']) ?></span></div><small><?= esc($t['save700']) ?></small><a class="button button-dark" href="https://app.enginex2030.com/register"><?= esc($t['choose']) ?></a></article>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section" id="faq">
-        <div class="container faq-layout">
-            <header class="section-head reveal"><p class="kicker"><span></span><?= esc($t['faq_kicker']) ?></p><h2><?= esc($t['faq_title']) ?></h2></header>
-            <div class="faq-list reveal"><?php foreach ($t['faqs'] as $index => $faq): ?><details <?= $index === 0 ? 'open' : '' ?>><summary><?= esc($faq[0]) ?><i>+</i></summary><p><?= esc($faq[1]) ?></p></details><?php endforeach; ?></div>
-        </div>
-    </section>
-
-    <section class="cta">
-        <div class="container cta-inner reveal"><div><p class="kicker light"><span></span><?= esc($t['cta_kicker']) ?></p><h2><?= esc($t['cta_title']) ?></h2><p><?= esc($t['cta_text']) ?></p></div><div class="cta-actions"><a class="button button-white" href="https://app.enginex2030.com/register"><?= esc($t['start']) ?></a><a class="button button-ghost" href="https://wa.me/201147372720" target="_blank" rel="noopener noreferrer"><?= esc($t['whatsapp']) ?></a></div></div>
-    </section>
+<section class="section faq" id="faq"><div class="container faq-layout"><header class="section-head reveal"><p class="eyebrow dark"><span></span><?= e($t['faqK']) ?></p><h2><?= e($t['faqT']) ?></h2></header><div class="faq-list reveal"><?php foreach($t['faqs'] as $i=>$f): ?><details <?= $i===0?'open':'' ?>><summary><?= e($f[0]) ?><span>+</span></summary><p><?= e($f[1]) ?></p></details><?php endforeach; ?></div></div></section>
+<section class="closing"><div class="blueprint"></div><div class="container closing-inner reveal"><span>ENGINEX ERP</span><h2><?= e($t['ctaT']) ?></h2><p><?= e($t['ctaP']) ?></p><div><a class="button" href="https://app.enginex2030.com/register"><?= e($t['start']) ?></a><a class="button outline" href="https://wa.me/201147372720" target="_blank" rel="noopener"><?= e($t['contact']) ?></a></div></div></section>
 </main>
-
-<footer class="footer">
-    <div class="container footer-grid"><div class="footer-brand"><a class="brand" href="#top"><span class="brand-mark"><i></i><b>X</b></span><span><strong>ENGINE<span>X</span></strong></span></a><p><?= esc($t['made_for']) ?></p></div><div><h3><?= esc($t['nav_features']) ?></h3><a href="#workflow"><?= esc($t['nav_workflow']) ?></a><a href="#platform"><?= esc($t['nav_platform']) ?></a><a href="#pricing"><?= esc($t['nav_pricing']) ?></a></div><div><h3><?= $isArabic ? 'تواصل' : 'Contact' ?></h3><a href="mailto:support@enginex2030.com">support@enginex2030.com</a><a href="https://wa.me/201147372720">WhatsApp</a><a href="https://app.enginex2030.com/register"><?= esc($t['start']) ?></a></div></div>
-    <div class="container copyright">© <?= date('Y') ?> ENGINEX ERP · <?= esc($t['rights']) ?></div>
-</footer>
-
+<footer class="footer"><div class="container footer-main"><div><a class="brand footer-logo" href="#top"><img src="assets/brand.svg" alt=""><span>ENGINE<b>X</b><small>ERP</small></span></a><p><?= e($t['footer']) ?></p></div><div><h3><?= $ar?'المنصة':'Platform' ?></h3><?php foreach($t['nav'] as $n): ?><a href="#<?= e($n[1]) ?>"><?= e($n[0]) ?></a><?php endforeach; ?></div><div><h3><?= $ar?'الحساب':'Account' ?></h3><a href="https://app.enginex2030.com/register"><?= e($t['start']) ?></a><a href="https://app.enginex2030.com/"><?= e($t['signin']) ?></a><a href="mailto:support@enginex2030.com">support@enginex2030.com</a></div><div><h3><?= $ar?'الدفع والدعم':'Payment & support' ?></h3><a href="https://wa.me/201147372720">WhatsApp</a><a href="https://ipn.eg/S/soom12002/instapay/3dl0ok">InstaPay</a><span><?= e($t['tax']) ?></span></div></div><div class="container footer-bottom"><span>© <?= date('Y') ?> ENGINEX ERP. <?= e($t['rights']) ?></span><span>enginex2030.com</span></div></footer>
 <script src="assets/app.js" defer></script>
-</body>
-</html>
+</body></html>
