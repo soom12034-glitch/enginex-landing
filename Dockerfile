@@ -3,7 +3,7 @@ FROM php:8.4-apache
 COPY . /var/www/html/
 COPY docker/apache.conf /etc/apache2/conf-available/enginex.conf
 
-RUN a2enmod headers \
+RUN a2enmod headers deflate expires \
     && a2enconf enginex \
     && chown -R www-data:www-data /var/www/html
 
