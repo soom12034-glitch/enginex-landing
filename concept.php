@@ -7,7 +7,7 @@ $copy = [
   'ar' => [
     'title' => 'ENGINEX ERP | إدارة المقاولات من المناقصة إلى التحصيل',
     'description' => 'منصة ERP عربية تربط المناقصات والمشروعات والمشتريات والمعدات والمستخلصات والمحاسبة في نظام واحد.',
-    'nav' => [['المنصة','platform'],['لمن صُممت','roles'],['الأسعار','pricing'],['الأسئلة','faq']],
+    'nav' => [['المنصة','platform'],['لمن صُممت','roles'],['الأسعار','pricing'],['تحميل التطبيق','/install.html']],
     'signin' => 'دخول النظام', 'start' => 'ابدأ تجربتك المجانية', 'demo' => 'شاهد المنصة',
     'eyebrow' => 'نظام تشغيل شركات المقاولات والاستشارات الهندسية',
     'h1a' => 'كل مشروع تحت السيطرة.', 'h1b' => 'كل قرار مبني على رقم.',
@@ -67,7 +67,7 @@ $copy = [
   'en' => [
     'title' => 'ENGINEX ERP | Construction from tender to collection',
     'description' => 'An Arabic-first ERP connecting tenders, projects, procurement, equipment, claims, and finance in one platform.',
-    'nav' => [['Platform','platform'],['Who it serves','roles'],['Pricing','pricing'],['FAQ','faq']],
+    'nav' => [['Platform','platform'],['Who it serves','roles'],['Pricing','pricing'],['Download','/install.html']],
     'signin' => 'Sign in', 'start' => 'Start your free trial', 'demo' => 'Explore the platform',
     'eyebrow' => 'The operating system for contractors and engineering consultancies',
     'h1a' => 'Every project under control.', 'h1b' => 'Every decision backed by data.',
@@ -155,7 +155,7 @@ function e(string $value): string { return htmlspecialchars($value, ENT_QUOTES, 
 <body>
 <header class="site-nav" data-nav>
   <a class="brand" href="#top" aria-label="ENGINEX ERP"><img src="assets/brand.svg" alt=""><span>ENGINE<b>X</b><small>ERP</small></span></a>
-  <nav><?php foreach ($t['nav'] as $item): ?><a href="#<?=e($item[1])?>"><?=e($item[0])?></a><?php endforeach; ?></nav>
+  <nav><?php foreach ($t['nav'] as $item): ?><a href="<?=str_starts_with($item[1], '/') ? e($item[1]).'?lang='.e($lang) : '#'.e($item[1])?>"><?=e($item[0])?></a><?php endforeach; ?></nav>
   <div class="nav-actions"><a class="language" href="?lang=<?=$ar?'en':'ar'?>"><?=$ar?'EN':'العربية'?></a><a class="login" href="https://app.enginex2030.com/"><?=e($t['signin'])?></a><a class="button button-small" href="https://app.enginex2030.com/register"><?=e($t['start'])?></a></div>
   <button class="menu" type="button" aria-label="Menu" data-menu><i></i><i></i></button>
 </header>
@@ -205,7 +205,7 @@ function e(string $value): string { return htmlspecialchars($value, ENT_QUOTES, 
   <section class="final-cta"><div><p class="overline"><span></span><?=e($t['finalK'])?></p><h2><?=e($t['finalT'])?></h2><p><?=e($t['finalP'])?></p><div><a class="button button-large" href="https://app.enginex2030.com/register"><?=e($t['start'])?><b>↗</b></a><a class="ghost-button" href="https://wa.me/201147372720"><?=e($t['talk'])?></a></div></div><span class="final-mark">EX</span></section>
 </main>
 
-<footer class="site-footer"><a class="brand" href="#top"><img src="assets/brand.svg" alt=""><span>ENGINE<b>X</b><small>ERP</small></span></a><p><?=e($t['copyright'])?></p><div><a href="?lang=<?=$ar?'en':'ar'?>"><?=$ar?'English':'العربية'?></a><a href="https://app.enginex2030.com/"><?=e($t['signin'])?></a></div></footer>
+<footer class="site-footer"><a class="brand" href="#top"><img src="assets/brand.svg" alt=""><span>ENGINE<b>X</b><small>ERP</small></span></a><p><?=e($t['copyright'])?></p><div><a href="install.html?lang=<?=e($lang)?>"><?=$ar?'تحميل التطبيق':'Download app'?></a><a href="?lang=<?=$ar?'en':'ar'?>"><?=$ar?'English':'العربية'?></a><a href="https://app.enginex2030.com/"><?=e($t['signin'])?></a></div></footer>
 <script src="assets/concept.js" defer></script>
 </body>
 </html>
