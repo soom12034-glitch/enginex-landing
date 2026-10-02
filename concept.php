@@ -2,6 +2,7 @@
 declare(strict_types=1);
 $lang = ($_GET['lang'] ?? 'ar') === 'en' ? 'en' : 'ar';
 $ar = $lang === 'ar';
+$isPreview = basename((string)($_SERVER['SCRIPT_NAME'] ?? '')) === 'concept.php';
 $copy = [
   'ar' => [
     'title' => 'ENGINEX ERP | إدارة المقاولات من المناقصة إلى التحصيل',
@@ -134,6 +135,17 @@ function e(string $value): string { return htmlspecialchars($value, ENT_QUOTES, 
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title><?=e($t['title'])?></title>
   <meta name="description" content="<?=e($t['description'])?>">
+  <?php if ($isPreview): ?><meta name="robots" content="noindex,follow"><?php endif; ?>
+  <link rel="canonical" href="https://enginex2030.com/?lang=<?=e($lang)?>">
+  <link rel="alternate" hreflang="ar" href="https://enginex2030.com/?lang=ar">
+  <link rel="alternate" hreflang="en" href="https://enginex2030.com/?lang=en">
+  <link rel="alternate" hreflang="x-default" href="https://enginex2030.com/?lang=ar">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="<?=e($t['title'])?>">
+  <meta property="og:description" content="<?=e($t['description'])?>">
+  <meta property="og:url" content="https://enginex2030.com/?lang=<?=e($lang)?>">
+  <meta property="og:image" content="https://enginex2030.com/assets/hero-enterprise-v3.jpg">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#071b2a">
   <link rel="icon" href="assets/favicon.svg">
   <link rel="preload" href="assets/cairo-arabic.woff2" as="font" type="font/woff2" crossorigin>
@@ -178,11 +190,11 @@ function e(string $value): string { return htmlspecialchars($value, ENT_QUOTES, 
 
   <section class="outcomes section"><div class="outcome-title"><p class="overline dark"><span></span><?=e($t['outcomeK'])?></p><h2><?=e($t['outcomeT'])?></h2></div><div class="outcome-list"><?php foreach ($t['outcomes'] as $o): ?><article><span><?=e($o[0])?></span><div><h3><?=e($o[1])?></h3><p><?=e($o[2])?></p></div><b>↗</b></article><?php endforeach; ?></div></section>
 
-  <section class="field-story"><div class="field-photo"><img src="assets/project-team.png" alt="<?=e($t['fieldK'])?>" loading="lazy"></div><div class="field-copy"><p class="overline"><span></span><?=e($t['fieldK'])?></p><h2><?=e($t['fieldT'])?></h2><p><?=e($t['fieldP'])?></p><div class="mini-screen"><img src="assets/screens/reports.webp" alt="<?=e($t['stories'][3][1])?>" loading="lazy"></div></div></section>
+  <section class="field-story"><div class="field-photo"><img src="assets/project-team.webp" alt="<?=e($t['fieldK'])?>" loading="lazy" width="1672" height="941"></div><div class="field-copy"><p class="overline"><span></span><?=e($t['fieldK'])?></p><h2><?=e($t['fieldT'])?></h2><p><?=e($t['fieldP'])?></p><div class="mini-screen"><img src="assets/screens/reports.webp" alt="<?=e($t['stories'][3][1])?>" loading="lazy"></div></div></section>
 
   <section class="roles section" id="roles"><header class="section-head compact"><p class="overline dark"><span></span><?=e($t['rolesK'])?></p><h2><?=e($t['rolesT'])?></h2></header><div class="role-list"><?php foreach ($t['roles'] as $i=>$r): ?><article><span>0<?=$i+1?></span><h3><?=e($r[0])?></h3><p><?=e($r[1])?></p><b><?=e($r[2])?></b></article><?php endforeach; ?></div></section>
 
-  <section class="arabic-first section"><div class="arabic-copy"><p class="overline"><span></span><?=e($t['arabK'])?></p><h2><?=e($t['arabT'])?></h2><p><?=e($t['arabP'])?></p><div class="arab-tags"><?php foreach ($t['arabTags'] as $tag): ?><span><?=e($tag)?></span><?php endforeach; ?></div></div><div class="arabic-visual"><div class="arch"><img src="assets/hero-construction.png" alt="" loading="lazy"></div><div class="language-card"><span>واجهة العمل</span><strong>العربية</strong><i>↔</i><strong>English</strong></div></div></section>
+  <section class="arabic-first section"><div class="arabic-copy"><p class="overline"><span></span><?=e($t['arabK'])?></p><h2><?=e($t['arabT'])?></h2><p><?=e($t['arabP'])?></p><div class="arab-tags"><?php foreach ($t['arabTags'] as $tag): ?><span><?=e($tag)?></span><?php endforeach; ?></div></div><div class="arabic-visual"><div class="arch"><img src="assets/hero-construction.webp" alt="" loading="lazy" width="1672" height="941"></div><div class="language-card"><span>واجهة العمل</span><strong>العربية</strong><i>↔</i><strong>English</strong></div></div></section>
 
   <section class="trust section"><div class="trust-line"><?php foreach ($t['trust'] as $i=>$v): ?><article><span>0<?=$i+1?></span><h3><?=e($v[0])?></h3><p><?=e($v[1])?></p></article><?php endforeach; ?></div></section>
 

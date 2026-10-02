@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /concept.php
 
 Sitemap: https://enginex2030.com/sitemap.xml
