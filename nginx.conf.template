@@ -1,0 +1,26 @@
+server {
+  listen 80 default_server;
+  server_name _;
+  root /usr/share/nginx/html;
+  index index.html;
+  server_tokens off;
+
+  add_header X-Content-Type-Options nosniff always;
+  add_header Referrer-Policy strict-origin-when-cross-origin always;
+  add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'sha256-2cy6lIdjR/wcP74y7tda2JdsxppeTsP9GVKD+9C556U=' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://cdn.tailwindcss.com https://code.iconify.design https://cdnjs.cloudflare.com; connect-src 'self' __VITE_API_BASE_URL__ https://www.google-analytics.com https://region1.google-analytics.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://api.iconify.design https://cdn.tailwindcss.com; style-src 'self' 'sha256-I+SKEmwWKbhMZmafPySS0/MlZYjyA0vnBhVhX4aOP9U=' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://ipn.eg https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://hoirqrkdgbmvpwutwuwj.supabase.co; font-src 'self' https://fonts.gstatic.com; frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" always;
+
+  location = /sw.js {
+    add_header Cache-Control "no-cache" always;
+    try_files $uri =404;
+  }
+
+  # Serve the redesigned landing page at the original PHP URLs as HTML.
+  location ~ ^/(index|preview|concept)\.php$ {
+    default_type text/html;
+    try_files /index.html =404;
+  }
+
+  location / {
+    try_files $uri $uri/ /index.html;
+  }
+}

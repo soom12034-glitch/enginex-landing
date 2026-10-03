@@ -1,0 +1,56 @@
+/* Selected direction 03: panoramic architectural cover and editorial chapters. */
+html[data-theme] { --bg:#f4f1ea; --soft:#eae6dc; --ink:#17282e; --ink2:#30484e; --muted:#586b70; --line:#c9c9bf; --brand:#91643a; color-scheme:light; }
+body { background:#f4f1ea; color:#17282e; }
+.header { background:#f4f1eaf2; }
+.header .tool { color:#17282e; }
+.hero { min-height:660px; min-height:min(820px,calc(100svh - 82px)); position:relative; isolation:isolate; background:#101c28; color:white; }
+.hero::before { content:""; inset:0; width:100%; height:100%; font-size:0; background:linear-gradient(270deg,rgba(8,19,29,.7),rgba(8,19,29,.32) 44%,transparent 70%),linear-gradient(0deg,rgba(8,19,29,.35),transparent 45%); z-index:-1; }
+.hero::after { content:none; }
+.future-cover { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; z-index:-2; }
+.hero .hero-grid { min-height:inherit; display:flex; align-items:center; padding-block:70px; }
+.hero-grid>div:first-child { width:min(620px,51%); }
+.hero-grid>div:first-child::after { content:none; }
+.hero h1 { color:#fff; font-size:clamp(42px,5.4vw,78px); line-height:1.17; margin-block:20px; text-shadow:0 2px 30px #0003; }
+.hero .eyebrow { color:#f1cfa3; }
+.hero .lead { color:#e2e7eb; max-width:530px; font-size:16px; }
+.hero .assurance { color:#d9e2e8; }
+.hero .assurance span::before { color:#ecc99f; }
+.btn,.closing .btn { background:#a97446; color:#fff; }
+.btn:hover { background:#795131; }
+.hero .ghost { color:#fff; border-color:#a5b0b8; background:#101c2844; }
+.hero-actions { gap:12px; flex-wrap:wrap; }
+.trusted { background:#e8e3d8; }
+.trusted .wrap { padding-block:0; gap:0; }
+.trusted p { padding:28px; color:#34494e; }
+.product-fact { padding:28px 14px; min-height:95px; border-color:#b9beb6; }
+.product-fact::before { display:none; }
+#viewer { padding-block:85px; background:#f4f1ea; }
+#viewer>.wrap { display:grid; grid-template-columns:.78fr 1.22fr; gap:50px; align-items:center; }
+#viewer .head { margin:0; }
+#viewer .head h2 { font-size:clamp(30px,3.4vw,48px); line-height:1.4; }
+.viewer { background:#fff; color:#17282e; border:1px solid #c9c9bf; box-shadow:12px 12px 0 #ded9ce; min-width:0; overflow:hidden; }
+.tabs { border-color:#c9c9bf; background:#ebe8e0; }
+.tab { color:#52666c; border-color:#c9c9bf; font-size:12px; min-width:90px; }
+.tab[aria-selected=true] { background:#172d38; color:#fff; }
+.viewgrid { display:flex; flex-direction:column; align-items:stretch; padding:18px; gap:18px; }
+.viewgrid figure { width:100%; }
+.viewgrid h3 { font-size:23px; }
+.viewgrid p { color:#586b70; font-size:12px; }
+.points { display:flex; flex-wrap:wrap; gap:16px; margin-bottom:0; }
+.points li::before { color:#a97446; }
+#workflow>.wrap { display:grid; grid-template-columns:.7fr 1.3fr; gap:55px; }
+#workflow .head h2 { font-size:clamp(30px,3.3vw,46px); line-height:1.4; }
+.timeline { display:flex; flex-direction:column; border:0; }
+.step { min-height:0; display:grid; grid-template-columns:48px 1fr; padding:22px 0; border:0; border-top:1px solid #bfc4bb; background:transparent; }
+.step strong { grid-row:1/4; font-size:20px; color:#9c7049; }
+.step h3 { margin:0 0 8px; }
+.step p,.step .inherit { grid-column:2; }
+.step .inherit { border:0; padding:0; margin-top:10px; }
+.zatca { background:#18333d; color:#fff; }
+.zatca h2 { color:white; }
+.zatca p,.compliance span { color:#c1d3d8; }
+.compliance { border-color:#657b7c; }
+.compliance div { border-color:#657b7c; }
+.live-field { display:none; }
+@media(max-width:900px) { #viewer>.wrap,#workflow>.wrap { grid-template-columns:1fr; gap:28px; } .hero-grid>div:first-child { width:65%; } .hero h1 { font-size:clamp(38px,6vw,62px); } }
+@media(max-width:600px) { .hero { min-height:720px; } .hero .hero-grid { align-items:flex-end; padding-block:40px; } .hero-grid>div:first-child { width:100%; } .future-cover { object-position:25% center; } .hero::before { background:linear-gradient(0deg,#0a1726f5 5%,#0a1726b5 53%,#0a172615 100%); } .hero h1 { max-width:440px; font-size:42px; } .hero .lead { font-size:14px; } .hero-actions { flex-direction:column; align-items:stretch; } .hero .eyebrow { font-size:11px; } .product-fact { padding:15px 8px; min-height:65px; background:#e8e3d8; } .trusted p { padding:22px 0; } .viewgrid { padding:10px; } .points { gap:8px; } }
