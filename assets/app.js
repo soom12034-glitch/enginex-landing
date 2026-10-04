@@ -1,5 +1,5 @@
 (() => {
-  const menuButton = document.querySelector('.menu-toggle');
+  const menuButton = document.querySelector('.menu');
   const mobileNav = document.querySelector('.mobile-nav');
   const closeMenu = () => {
     mobileNav?.classList.remove('open');
@@ -14,40 +14,49 @@
   });
   mobileNav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
 
-  const reveal = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    reveal.forEach((element) => observer.observe(element));
-  } else {
-    reveal.forEach((element) => element.classList.add('visible'));
-  }
-
   const image = document.querySelector('#demoImage');
   const title = document.querySelector('#demoTitle');
   const copy = document.querySelector('#demoCopy');
-  document.querySelectorAll('.demo-tabs button').forEach((tab) => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.demo-tabs button').forEach((item) => item.setAttribute('aria-selected', 'false'));
-      tab.setAttribute('aria-selected', 'true');
-      image.style.opacity = '.2';
-      const next = new Image();
-      next.onload = () => {
-        image.src = next.src;
-        image.alt = tab.textContent.trim();
-        title.textContent = tab.textContent.trim();
-        copy.textContent = tab.dataset.copy;
-        image.style.opacity = '1';
-      };
-      next.src = `assets/screens/${tab.dataset.screen}.webp`;
-    });
+  const tourShell = document.querySelector('.tour-shell');
+  const tabs = [...document.querySelectorAll('.tour-tabs button')];
+  let activeTab = 0;
+  let rotation;
+
+  const showTab = (index) => {
+    if (!tabs.length || !image) return;
+    activeTab = (index + tabs.length) % tabs.length;
+    const tab = tabs[activeTab];
+    tabs.forEach((item, itemIndex) => item.setAttribute('aria-selected', String(itemIndex === activeTab)));
+    tourShell?.classList.add('is-changing');
+    const next = new Image();
+    next.onload = () => {
+      image.src = next.src;
+      image.alt = tab.textContent.trim();
+      title.textContent = tab.textContent.trim();
+      copy.textContent = tab.dataset.copy;
+      requestAnimationFrame(() => tourShell?.classList.remove('is-changing'));
+    };
+    next.src = `assets/screens/${tab.dataset.screen}.webp`;
+  };
+
+  const startRotation = () => {
+    clearInterval(rotation);
+    rotation = setInterval(() => showTab(activeTab + 1), 5800);
+  };
+
+  tabs.forEach((tab, index) => tab.addEventListener('click', () => {
+    showTab(index);
+    startRotation();
+  }));
+  tourShell?.addEventListener('mouseenter', () => {
+    clearInterval(rotation);
+    tourShell.classList.add('paused');
   });
+  tourShell?.addEventListener('mouseleave', () => {
+    tourShell.classList.remove('paused');
+    startRotation();
+  });
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) startRotation();
 
   fetch('https://app.enginex2030.com/api/admin/plans', { headers: { Accept: 'application/json' } })
     .then((response) => response.ok ? response.json() : Promise.reject())

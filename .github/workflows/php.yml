@@ -1,4 +1,4 @@
-name: PHP lint
+name: Marketing site checks
 
 on:
   push:
@@ -10,12 +10,17 @@ permissions:
   contents: read
 
 jobs:
-  lint:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/setup-node@v4
         with:
-          php-version: "8.4"
-      - name: Lint PHP files
-        run: find . -name '*.php' -print0 | xargs -0 -n1 php -l
+          node-version: "22"
+          cache: npm
+      - name: Install
+        run: npm ci --no-audit --no-fund
+      - name: Build
+        run: npm run build
+      - name: Test
+        run: npm test

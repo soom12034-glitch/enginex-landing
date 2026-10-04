@@ -1,0 +1,15 @@
+{
+  "name": "enginex2030-marketing-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Standalone ENGINEX2030 bilingual cloud marketing site",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/preview.mjs",
+    "test": "node --test"
+  }
+}
