@@ -81,6 +81,9 @@ await rm(deployDir, { recursive: true, force: true });
 await mkdir(distDir, { recursive: true });
 await mkdir(deployDir, { recursive: true });
 await copyContents(sourceDir, distDir);
+// Publish a stable English URL so Google can index it as a separate language version.
+await mkdir(path.join(distDir, 'en'), { recursive: true });
+await cp(path.join(sourceDir, 'index.html'), path.join(distDir, 'en', 'index.html'));
 await copyContents(publicDir, distDir);
 // Keep existing public asset URLs usable by saved links and installer pages.
 await copyContents(path.join(root, 'assets'), path.join(distDir, 'assets'));
