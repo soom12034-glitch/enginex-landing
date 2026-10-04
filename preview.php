@@ -51,7 +51,7 @@ function e(string $v): string { return htmlspecialchars($v, ENT_QUOTES, 'UTF-8')
 <title><?=e($c['title'])?></title><meta name="description" content="<?=e($c['desc'])?>"><meta name="robots" content="noindex,follow">
 <meta name="theme-color" content="#061a29"><link rel="icon" href="assets/favicon.svg">
 <link rel="preload" href="assets/cairo-arabic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/hero-enterprise-v3.webp" as="image" type="image/webp" fetchpriority="high">
+<link rel="preload" href="assets/hero-future-architecture.png" as="image" type="image/png" fetchpriority="high">
 <link rel="stylesheet" href="assets/rx.css">
 </head>
 <body>

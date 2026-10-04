@@ -67,3 +67,7 @@ body{background:#f5f7fa;color:#0b1624}
 .final{padding:100px var(--pad);background:linear-gradient(120deg,#ff9f1a,#ffbe4b)}
 @media(max-width:1050px){.bar nav{gap:22px}.hero{grid-template-columns:1fr;gap:42px}.hero-in,.hero-frame,[dir=rtl] .hero-in,[dir=rtl] .hero-frame,[dir=ltr] .hero-in,[dir=ltr] .hero-frame{grid-column:1;grid-row:auto}.hero-in{max-width:760px}.need-grid,.payment-grid{grid-template-columns:repeat(2,1fr)}.rows{grid-template-columns:1fr 1fr}}
 @media(max-width:680px){.promo{height:36px;font-size:12px}.bar{height:68px}.bar nav{display:none}.bar-end .btn{display:none}.hero{padding:72px 20px 60px;gap:34px}.hero h1{font-size:clamp(42px,12vw,60px)}.lead{font-size:17px}.problem,.payment,.control,.price,.final{padding:76px 20px}.need-grid,.payment-grid,.rows{grid-template-columns:1fr}.need-card,.step-card{min-height:0;padding:26px}.section-intro h2{font-size:38px}.section-intro>p:last-child{font-size:17px}.flow{padding:76px 20px}.row{min-height:260px}.payment-grid{gap:16px}}
+
+/* Approved hero artwork: the open right side keeps Arabic copy readable. */
+.hero{background-image:linear-gradient(270deg,rgba(6,19,33,.88) 0%,rgba(6,19,33,.56) 38%,rgba(6,19,33,.10) 72%),url(hero-future-architecture.png);background-position:center;background-size:cover}
+[dir=ltr] .hero{background-image:linear-gradient(90deg,rgba(6,19,33,.78) 0%,rgba(6,19,33,.42) 38%,rgba(6,19,33,.08) 72%),url(hero-future-architecture.png)}
