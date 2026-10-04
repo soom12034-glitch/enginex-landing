@@ -54,3 +54,7 @@ body { background:#f4f1ea; color:#17282e; }
 .live-field { display:none; }
 @media(max-width:900px) { #viewer>.wrap,#workflow>.wrap { grid-template-columns:1fr; gap:28px; } .hero-grid>div:first-child { width:65%; } .hero h1 { font-size:clamp(38px,6vw,62px); } }
 @media(max-width:600px) { .hero { min-height:720px; } .hero .hero-grid { align-items:flex-end; padding-block:40px; } .hero-grid>div:first-child { width:100%; } .future-cover { object-position:25% center; } .hero::before { background:linear-gradient(0deg,#0a1726f5 5%,#0a1726b5 53%,#0a172615 100%); } .hero h1 { max-width:440px; font-size:42px; } .hero .lead { font-size:14px; } .hero-actions { flex-direction:column; align-items:stretch; } .hero .eyebrow { font-size:11px; } .product-fact { padding:15px 8px; min-height:65px; background:#e8e3d8; } .trusted p { padding:22px 0; } .viewgrid { padding:10px; } .points { gap:8px; } }
+
+/* v2 hero artwork: use a versioned URL so the deployed static page cannot serve the old cached image. */
+.future-cover{display:none}
+.hero::after{content:"";position:absolute;inset:0;z-index:-2;background:url('/future-architecture-v2.png') center/cover no-repeat}
