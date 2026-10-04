@@ -101,8 +101,8 @@ function e(string $v): string { return htmlspecialchars($v, ENT_QUOTES, 'UTF-8')
 <section class="price" id="pricing">
   <header><p class="kick"><?=e($c['pr'])?></p><h2><?=e($c['pt'])?></h2><p><?=e($c['pp'])?></p></header>
   <div class="rows">
-    <a class="row" href="<?=$APP?>/register"><span><?=e($c['y1'])?></span><strong><em data-price="annual">350</em> <small><?=e($c['sar'])?></small></strong></a>
-    <a class="row hot" href="<?=$APP?>/register"><span><?=e($c['y2'])?><br><small><?=e($c['save'])?></small></span><strong><em data-price="biennial">700</em> <small><?=e($c['sar'])?></small></strong></a>
+    <a class="row offer-image" href="<?=$APP?>/register"><img src="assets/gallery/enginex-scene-06.jpg" alt="<?=e($ar ? 'اشتراك سنة — 550 ريال' : 'One-year subscription — SAR 550')?>" loading="lazy"></a>
+    <a class="row hot offer-image" href="<?=$APP?>/register"><img src="assets/gallery/enginex-scene-06-two-years.png" alt="<?=e($ar ? 'اشتراك سنتين — 1100 ريال' : 'Two-year subscription — SAR 1100')?>" loading="lazy"></a>
     <p class="pay"><?=e($c['pay'])?></p>
   </div>
 </section>
